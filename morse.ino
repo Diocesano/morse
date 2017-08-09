@@ -1,5 +1,79 @@
-//MORSE
+/*
 
+  #Título: Morse
+
+  #Autores: Maiara Torres - 2015774@aluno.diocesanocaruaru.g12.br
+            Alisson Sherman - 2014059@aluno.diocesanocaruaru.g12.br
+            Caio José - 32439@aluno.diocesanocaruaru.g12.br
+            Guilherme Liberato - 35715@aluno.diocesanocaruaru.g12.br
+
+  #Orientador: Prof. Diógenes Souza - diogenessouza@diocesanocaruaru.g12.br
+
+
+  #Descrição:
+  Este projeto funciona a partir do aplicativo android
+  que desenvolvemos que compreende o que foi falado e
+  envia a palavra via bluetooth para o módulo bluetooth
+  conectado à porta de comunicação serial da placa Arduino.
+  O Arduino, por meio desta programação, converte a palavra
+  para código Morse através de um led intermitente e também
+  de som através de um buzzer. Como complemento, aparece no
+  visor lcd o código graficamente reprentado.
+
+  #Componentes:
+  ->1 placa baseada no Arduino Uno R3, utilizando o
+      microcontrolador Atmel Atmega328p
+  ->1 Módulo bluetooth HC-05
+  ->1 Led difuso 5mm na cor vermelha
+  ->1 Buzzer 5v
+  ->1 Display LCD 16x2 com módulo I2C
+
+  #Conexões:
+
+                                      +-----+
+         +----[PWR]-------------------| USB |--+
+         |                            +-----+  |
+         |                                     |
+         |                           A5/SCL[ ] |
+         |                           A4/SDA[ ] |
+         |                             AREF[ ] |
+         |                              GND[ ] |
+         | [ ]N/C                    SCK/13[ ] |
+         | [ ]IOREF                 MISO/12[ ] |
+         | [ ]RST                   MOSI/11[ ]~|
+         | [ ]3V3    +---+               10[ ]~|
+         | [ ]5v    -| A |-               9[B]~|
+         | [ ]GND   -| R |-               8[C] |
+         | [ ]GND   -| D |-                    |
+         | [ ]Vin   -| U |-               7[ ] |
+         |          -| I |-               6[ ]~|
+         | [ ]A0    -| N |-               5[ ]~|
+         | [ ]A1    -| O |-               4[ ] |
+         | [ ]A2     +---+           INT1/3[ ]~|
+         | [ ]A3                     INT0/2[ ] |
+         | [D]A4/SDA                   TX>1[ ] |
+         | [E]A5/SCL                   RX<0[ ] |
+         |                                     |
+         |  UNO_R3                 ____________/
+          \_______________________/
+
+  B: pino positivo do buzzer
+  C: pino positivo do led
+  D: pino SDA do display LCD
+  E: pino SCL do display LCD
+
+*/
+
+
+//bibliotecas
+#include <Wire.h>
+#include <LCD.h>
+#include <LiquidCrystal_I2C.h>
+
+//determina em quais pinos o LCD será conectado
+LiquidCrystal_I2C  lcd(0x27, 2, 1, 0, 4, 5, 6, 7);
+
+//constantes
 #define buzzer 9
 #define led 8
 
@@ -7,6 +81,9 @@ void setup() {
   Serial.begin(9600);
   pinMode(buzzer, OUTPUT);
   pinMode(led, OUTPUT);
+  lcd.setBacklightPin(3, POSITIVE);
+  lcd.setBacklight(HIGH);
+  lcd.begin(16, 2);
 }
 
 void loop() {
@@ -21,19 +98,27 @@ void loop() {
 void ponto() {
   digitalWrite(led, HIGH);
   digitalWrite(buzzer, HIGH);
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Ponto  .  ");
   delay(300);
   digitalWrite(led, LOW);
   digitalWrite(buzzer, LOW);
   delay(1000);
+  lcd.clear();
 }
 
 void traco() {
   digitalWrite(led, HIGH);
   digitalWrite(buzzer, HIGH);
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Traço  -  ");
   delay(750);
   digitalWrite(led, LOW);
   digitalWrite(buzzer, LOW);
   delay(1000);
+  lcd.clear();
 }
 void A() {
   ponto();
