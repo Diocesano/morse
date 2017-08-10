@@ -92,33 +92,30 @@ void loop() {
     int auxiliar = Serial.read();
     Serial.println(auxiliar);
     executar(auxiliar);
+    lcd.clear();
   }
 }
 
 void ponto() {
   digitalWrite(led, HIGH);
   digitalWrite(buzzer, HIGH);
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("Ponto  .  ");
+  lcd.print(". ");
   delay(300);
   digitalWrite(led, LOW);
   digitalWrite(buzzer, LOW);
   delay(1000);
-  lcd.clear();
+
 }
 
 void traco() {
   digitalWrite(led, HIGH);
   digitalWrite(buzzer, HIGH);
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("Traco  -  ");
+  lcd.print("- ");
   delay(750);
   digitalWrite(led, LOW);
   digitalWrite(buzzer, LOW);
   delay(1000);
-  lcd.clear();
+
 }
 void A() {
   ponto();
@@ -294,6 +291,7 @@ void Z() {
   traco();
   ponto();
   ponto();
+  lcd.print("/");
   delay(4000);
 }
 
