@@ -113,7 +113,7 @@ void traco() {
   digitalWrite(buzzer, HIGH);
   lcd.clear();
   lcd.setCursor(0, 0);
-  lcd.print("Traço  -  ");
+  lcd.print("Traco  -  ");
   delay(750);
   digitalWrite(led, LOW);
   digitalWrite(buzzer, LOW);
