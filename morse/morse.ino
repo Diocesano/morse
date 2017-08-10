@@ -1,6 +1,6 @@
 /*
 
-  #Título: Morse
+  #Título: Decodificador Morse
 
   #Autores: Maiara Torres - 2015774@aluno.diocesanocaruaru.g12.br
             Alisson Sherman - 2014059@aluno.diocesanocaruaru.g12.br
