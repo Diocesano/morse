@@ -23,7 +23,7 @@
   #Componentes:
   ->1 placa baseada no Arduino Uno R3, utilizando o
       microcontrolador Atmel Atmega328p
-  ->1 Módulo bluetooth HC-05
+  ->1 Módulo bluetooth HC-06
   ->1 Led difuso 5mm na cor vermelha
   ->1 Buzzer 5v
   ->1 Display LCD 16x2 com módulo I2C
