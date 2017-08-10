@@ -78,25 +78,25 @@ LiquidCrystal_I2C  lcd(0x27, 2, 1, 0, 4, 5, 6, 7);
 #define led 8
 
 void setup() {
-  Serial.begin(9600);
-  pinMode(buzzer, OUTPUT);
-  pinMode(led, OUTPUT);
-  lcd.setBacklightPin(3, POSITIVE);
-  lcd.setBacklight(HIGH);
-  lcd.begin(16, 2);
+  Serial.begin(9600); //inicia a porta serial
+  pinMode(buzzer, OUTPUT); //configura o pino do buzzer como saída
+  pinMode(led, OUTPUT); //configura o pino do led como saída
+  lcd.setBacklightPin(3, POSITIVE); //ativa o uso da luz de background do visor lcd
+  lcd.setBacklight(HIGH); //acende a luz de background do visor lcd
+  lcd.begin(16, 2); //inicia o visor lcd informando que são 16 caracteres e duas linhas
 }
 
 void loop() {
 
-  if (Serial.available ()) {
-    int auxiliar = Serial.read();
-    Serial.println(auxiliar);
-    executar(auxiliar);
-    lcd.clear();
+  if (Serial.available ()) {       //se algum dado for recebido na porta serial (pelo módulo bluetooth)
+    int auxiliar = Serial.read();  // armazena na variável auxiliar a leitura da porta serial
+    Serial.println(auxiliar);     //printa o valor da variável auxiliar (leitura da serial)
+    executar(auxiliar);          //executa função "executar", que emite os códigos de cada letra recebida
+    lcd.clear();                //limpa o visor depois de cada letra impressa no lcd
   }
 }
 
-void ponto() {
+void ponto() {              //função que emite o sinal referente ao ponto e o printa no visor lcd
   digitalWrite(led, HIGH);
   digitalWrite(buzzer, HIGH);
   lcd.print(". ");
@@ -107,7 +107,7 @@ void ponto() {
 
 }
 
-void traco() {
+void traco() {            //função que emite o sinal referente ao traço e o printa no visor lcd
   digitalWrite(led, HIGH);
   digitalWrite(buzzer, HIGH);
   lcd.print("- ");
@@ -115,8 +115,9 @@ void traco() {
   digitalWrite(led, LOW);
   digitalWrite(buzzer, LOW);
   delay(1000);
-
 }
+
+//série de funções que executam os sinais referente a cada letra do código Morse (de A a Z)
 void A() {
   ponto();
   traco();
@@ -295,6 +296,7 @@ void Z() {
   delay(4000);
 }
 
+//função executar, que confere o valor recebido pela serial e exceuta a função da letra correspondente ao código recebio
 void executar(int x) {
   if (x == 97) {
     A();
